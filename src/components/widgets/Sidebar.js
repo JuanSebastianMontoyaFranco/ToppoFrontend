@@ -3,8 +3,8 @@ import SimpleBar from 'simplebar-react';
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faCog, faHandHoldingUsd, faSignOutAlt, faTimes, faUser, faGift, faTags } from "@fortawesome/free-solid-svg-icons";
-import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
+import { faBoxOpen, faCog, faHandHoldingUsd, faSignOutAlt, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
+import { Nav, Badge, Image, Button, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import Swal from "sweetalert2";
 
 import { Routes } from "../../routes";
@@ -216,10 +216,7 @@ const Sidebar = (props = {}) => {
               >
                 <NavItem
                   title="Credenciales"
-
-                />
-                <NavItem
-                  title="Parámetros"
+                  link= {Routes.Credentials.path}
 
                 />
                 <NavItem

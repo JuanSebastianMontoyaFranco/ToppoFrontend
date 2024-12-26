@@ -1,32 +1,20 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faHandHoldingUsd, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Nav, Badge, Image, Button, Navbar } from '@themesberg/react-bootstrap';
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Nav, Image, Button, Navbar } from '@themesberg/react-bootstrap';
 
 import { Routes } from "../../routes";
 import toppoLogo from "../../assets/img/logos/toppo-logo.png";
-import CustomToast from '../widgets/ToastCooming'; // Ajusta la ruta según tu estructura de archivos
 
 const LandingSidebar = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
   const showClass = show ? "show" : "";
 
   const onCollapse = () => setShow(!show);
-
-  const [showToast, setShowToast] = useState(false);
-
-  const handleShowToast = () => {
-      setShowToast(true);
-  };
-
-  const handleCloseToast = () => {
-      setShowToast(false);
-  };
 
   const NavItem = ({ title, link, icon }) => {
     const navItemClassName = link === pathname ? "active" : "";
@@ -77,8 +65,6 @@ const LandingSidebar = () => {
           </div>
         </div>
       </CSSTransition>
-      <CustomToast show={showToast} onClose={handleCloseToast} message="Próximamente" />
-
     </>
   );
 };

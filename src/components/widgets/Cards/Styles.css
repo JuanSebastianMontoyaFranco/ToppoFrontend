@@ -1,0 +1,29 @@
+/* Estilo para el ícono de la tuerquita */
+.cog-icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  
+  .cog-icon:hover {
+    transform: scale(1.2);
+    color: #007bff;
+  }
+  
+  /* Animación para el formulario */
+  .form-collapse {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  
+  .form-collapse.show {
+    max-height: 500px; /* Ajusta según el contenido */
+    opacity: 1;
+  }
+  

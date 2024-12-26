@@ -15,10 +15,13 @@ import Preloader from '../components/widgets/Preloader';
 import Sidebar from '../components/widgets/Sidebar';
 import Navbar from '../components/widgets/Navbar'
 
-//TOPPO
+// Login
 import Login from '../components/toppo/login/Login'
-
 import Dashboard from '../components/toppo/dashboard/Dashboard'
+
+// Credentials
+import Credentials from '../components/toppo/credentials/Credentials'
+
 
 // Usa la configuración de rutas
 import { Routes as RoutesConfig } from '../routes';
@@ -106,6 +109,8 @@ export default function AppRoutes() {
       <Route path={RoutesConfig.Login.path} element={<RouteWithLoader element={Login} />} />
 
       <Route path={RoutesConfig.Dashboard.path} element={<RouteWithSidebar element={Dashboard} allowedRoles={['admin', 'client']} />} />
+      <Route path={RoutesConfig.Credentials.path} element={<RouteWithSidebar element={Credentials} allowedRoles={['admin', 'client']} />} />
+
       {/* Ruta catch-all */}
       <Route path="*" element={<NotFoundRedirect />} />
 

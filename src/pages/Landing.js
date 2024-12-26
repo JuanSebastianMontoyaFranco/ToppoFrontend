@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faHeart, faBook, faExternalLinkAlt, faTimesCircle, faCheckCircle, faCalendarAlt, faCodeBranch, faShoppingCart, faFolder, faMapMarkedAlt, faPager, faFileCode, faDownload, faL } from "@fortawesome/free-solid-svg-icons";
-import { faBootstrap, faGithub, faJs, faReact, faSass, } from "@fortawesome/free-brands-svg-icons";
-import { Col, Row, Card, Image, Button, Container, ListGroup, Tooltip, OverlayTrigger, Form, Navbar, Nav, Badge, NavItem, Popover, Toast } from '@themesberg/react-bootstrap';
+import { faHeart, faTimesCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row, Card, Image, Button, Container, ListGroup, Tooltip, OverlayTrigger, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import SimpleBar from 'simplebar-react';
-import { CSSTransition } from 'react-transition-group';
-import { Routes as RoutesConfig } from '../routes';
 
-import rabbitLogo from '../assets/img/logos/rabbit-logo-black.png';
 import rabbitLogoBlack from '../assets/img/logos/rabbit-iso.png';
 import toppoLogo from '../assets/img/logos/toppo-logo.png';
-import { Routes } from "../routes";
 
 import BS5Logo from "../assets/img/technologies/bootstrap-5-logo.svg";
 import ReactLogo from "../assets/img/technologies/react-logo.svg";
-
-import CustomToast from '../components/widgets/ToastCooming'; // Ajusta la ruta según tu estructura de archivos
-
 
 export default () => {
 

@@ -4,4 +4,6 @@ export const Routes = {
   Dashboard: { path: "/dashboard" },
 
   Login: { path: "/login" },
+
+  Credentials: { path: "/dashboard/credentials" },
 };

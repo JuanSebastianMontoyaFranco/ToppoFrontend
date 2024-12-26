@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './pages/HomePage';
-import { CartProvider } from './context/CartContext';  // Importar el CartProvider
 
 import { Context, Provider } from './context/Context';
 
@@ -11,9 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Provider value={[auth, saveAuth]}>
-        <CartProvider>
           <AppRoutes />
-        </CartProvider>
       </Provider>
 
     </BrowserRouter>

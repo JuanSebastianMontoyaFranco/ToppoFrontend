@@ -4,7 +4,6 @@ import { CircleChart } from "./Charts";
 
 export const CircleChartWidget = ({ title, data = [] }) => {
   const series = data.map((d) => d.value);
-  const labels = data.map((d) => d.label);
   const colors = data.map((d) => d.color || "#ccc"); // Colores por defecto
 
   return (

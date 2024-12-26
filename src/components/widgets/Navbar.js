@@ -1,16 +1,10 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Image, Navbar, Dropdown, Container } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
 
-import { Routes } from "../../routes";
 import { Context } from "../../context/Context";
 import { AlertCancelConfirm } from "../alerts/Alerts";
-
-import toppoLogo from '../../assets/img/logos/toppo-logo.png';
 
 const Header = (props) => {
   const [auth, saveAuth] = useContext(Context);
