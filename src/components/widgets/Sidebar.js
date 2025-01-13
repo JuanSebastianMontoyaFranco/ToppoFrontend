@@ -186,23 +186,6 @@ const Sidebar = (props = {}) => {
                 link={Routes.Dashboard.path}
               />
 
-              {auth.role === 'admin' && (
-
-                <CollapsableNavItem
-                  eventKey="/users"
-                  title="Usuarios"
-                  icon={faUser}
-                  isOpen={isUsersAccordionOpen || shouldUsersAccordionOpen} // Mantener el acordeón abierto
-                  onToggle={() => setUsersAccordionOpen(!isUsersAccordionOpen)}
-                >
-                  {auth.role === 'admin' && (
-                    <NavItem
-                      title="Usuarios"
-                    />
-                  )}
-                </CollapsableNavItem>
-              )}
-
               <NavItem title="Catálogo" icon={faBoxOpen} />
 
               <NavItem title="Pedidos" icon={faHandHoldingUsd} />

@@ -5,5 +5,7 @@ export const Routes = {
 
   Login: { path: "/login" },
 
+  Catalog: { path: "/dashboard/catalog" },
+
   Credentials: { path: "/dashboard/credentials" },
 };

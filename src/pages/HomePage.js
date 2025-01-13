@@ -19,9 +19,11 @@ import Navbar from '../components/widgets/Navbar'
 import Login from '../components/toppo/login/Login'
 import Dashboard from '../components/toppo/dashboard/Dashboard'
 
+// Catalogs
+import Catalog from '../components/toppo/catalog/Catalog'
+
 // Credentials
 import Credentials from '../components/toppo/credentials/Credentials'
-
 
 // Usa la configuración de rutas
 import { Routes as RoutesConfig } from '../routes';
@@ -109,6 +111,8 @@ export default function AppRoutes() {
       <Route path={RoutesConfig.Login.path} element={<RouteWithLoader element={Login} />} />
 
       <Route path={RoutesConfig.Dashboard.path} element={<RouteWithSidebar element={Dashboard} allowedRoles={['admin', 'client']} />} />
+      <Route path={RoutesConfig.Catalog.path} element={<RouteWithSidebar element={Catalog} allowedRoles={['admin', 'client']} />} />
+      
       <Route path={RoutesConfig.Credentials.path} element={<RouteWithSidebar element={Credentials} allowedRoles={['admin', 'client']} />} />
 
       {/* Ruta catch-all */}
