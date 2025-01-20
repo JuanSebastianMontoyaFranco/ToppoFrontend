@@ -16,8 +16,8 @@ $gray-600: #93a5be;
 $gray-700: #66799e;   
 $gray-800: #506690;   
 $gray-900: #4A5073;
-$dark    : #f9bb1a; 
-$black   : #ffcd4f;
+$dark    : #262b3f; 
+$black   : #4c5680;
 
 // fusv-disable
 $grays: (
@@ -68,9 +68,9 @@ $colors: (
 // scss-docs-end colors-map
 
 // Color scheme
-$default:       #f9bb1a;
-$primary:       #f9bb1a;
-$secondary:     #6a3d36;
+$default:       #262b3f;
+$primary:       #262b3f;
+$secondary:     #4c5680;
 $tertiary:      #1B998B;
 $quaternary:    #C96480;
 
@@ -79,7 +79,7 @@ $ct-series-names: (a, b, c, d, e, f, g) !default;
 $ct-series-colors: (
   #1B998B,
   #17a5ce,
-  #f9bb1a,
+  #262b3f,
   #f5b759,
   #C96480,
   #ffffff,
@@ -89,7 +89,7 @@ $ct-series-colors: (
 
 // Mobile landing color scheme
 $primary-app:     #EBF4F6;
-$secondary-app:   #f9bb1a;
+$secondary-app:   #262b3f;
 
 $success:       $green;
 $info:          $blue;

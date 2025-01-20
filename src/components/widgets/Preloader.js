@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from '@themesberg/react-bootstrap';
-import ReactLogo from "../../assets/img/logo-main.png";
+import ReactLogo from "../../assets/img/logos/toppo-logo.png";
 
 const Preloader = (props) => {
   const { show } = props;

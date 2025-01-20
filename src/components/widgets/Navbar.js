@@ -12,12 +12,8 @@ const Header = (props) => {
   // Define la URL base para las imágenes
   const BASE_IMAGE_URL = process.env.REACT_APP_BASE_IMAGE_PROFILE_URL;
 
-  const getInitial = () => {
-    if (auth.role === 'admin') {
-      return auth.name ? auth.name.charAt(0).toUpperCase() : '';
-    } else {
-      return auth.first_name ? auth.first_name.charAt(0).toUpperCase() : '';
-    }
+  const getInitial = (name) => {
+    return name ? name.charAt(0).toUpperCase() : '';
   };
 
 

@@ -13,6 +13,8 @@ const Dashboard = () => {
     products: { active: 0, draft: 0, archived: 0 },
   });
 
+  const displayName = `${auth.first_name} ${auth.last_name}`;
+
   useEffect(() => {
     // Solicita datos a la API
     const fetchStatistics = async () => {
@@ -51,7 +53,7 @@ const Dashboard = () => {
             <Breadcrumb.Item>Toppo</Breadcrumb.Item>
             <Breadcrumb.Item active>Home</Breadcrumb.Item>
           </Breadcrumb>
-          <h4 className="title-page">BIENVENIDO A TOPPO! {auth.first_name}</h4>
+          <h4 className="title-page">Bienvenido a Toppo! {displayName}</h4>
         </div>
       </div>
 

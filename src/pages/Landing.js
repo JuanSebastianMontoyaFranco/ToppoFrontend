@@ -5,11 +5,8 @@ import { Col, Row, Card, Image, Button, Container, ListGroup, Tooltip, OverlayTr
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
-import rabbitLogoBlack from '../assets/img/logos/rabbit-iso.png';
+import rabbitLogo from '../assets/img/logos/rabbit-logo.png';
 import toppoLogo from '../assets/img/logos/toppo-logo.png';
-
-import BS5Logo from "../assets/img/technologies/bootstrap-5-logo.svg";
-import ReactLogo from "../assets/img/technologies/react-logo.svg";
 
 export default () => {
 
@@ -32,7 +29,7 @@ export default () => {
                             <div className="d-flex justify-content-center flex-column mb-6 mb-lg-5 mt-5">
                                 <div className="text-center">
                                     <a href="https://rabbitstudio.co" target="_blank">
-                                        <Image src={rabbitLogoBlack} height={70} width={200} className="mb-3" alt="Themesberg Logo" />
+                                        <Image src={rabbitLogo} height={70} width={200} className="mb-3" alt="Themesberg Logo" />
                                         <p className="text-muted font-small m-0">Desarrollado con  <FontAwesomeIcon icon={faHeart} style={{ color: 'red' }} />   por Rabbit</p>
                                     </a>
                                 </div>
@@ -160,13 +157,13 @@ export default () => {
                             <div>
                                 <Card.Link href="https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard" target="_blank" className="me-3">
                                     <OverlayTrigger placement="top" trigger={['hover', 'focus']} overlay={<Tooltip>Bootstrap 5 · The most popular HTML, CSS, and JS library in the world.</Tooltip>}>
-                                        <Image src={BS5Logo} className="image image-sm" />
+                                        <Image  className="image image-sm" />
                                     </OverlayTrigger>
                                 </Card.Link>
 
                                 <Card.Link href="https://themesberg.com/product/dashboard/volt-react" target="_blank" className="me-3">
                                     <OverlayTrigger placement="top" trigger={['hover', 'focus']} overlay={<Tooltip>React · A JavaScript library for building user interfaces.</Tooltip>}>
-                                        <Image src={ReactLogo} className="image image-sm" />
+                                        <Image className="image image-sm" />
                                     </OverlayTrigger>
                                 </Card.Link>
                             </div>
@@ -224,7 +221,7 @@ export default () => {
                     <Row>
                         <Col className="mb-md-2">
                             <Card.Link href="https://themesberg.com" target="_blank" className="d-flex justify-content-center">
-                                <Image src={rabbitLogoBlack} height={35} className="d-block mx-auto mb-3" alt="Themesberg Logo" />
+                                <Image src={rabbitLogo} height={35} className="d-block mx-auto mb-3" alt="Themesberg Logo" />
                             </Card.Link>
                             <div className="d-flex text-center justify-content-center align-items-center" role="contentinfo">
                                 <p className="font-weight-normal font-small mb-0">Desarrollado con <FontAwesomeIcon icon={faHeart} style={{ color: 'red' }} /> por Rabbit<span className="current-year">2021</span></p>

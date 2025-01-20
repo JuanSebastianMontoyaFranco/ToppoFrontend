@@ -164,7 +164,7 @@ const Sidebar = (props = {}) => {
                   ) : (
                     <div
                       className=" avatar-initial-invert user-avatar md-avatar rounded-circle d-flex justify-content-center align-items-center">
-                      {getInitial(auth.name)}
+                      {getInitial(auth.firts_name)}
                     </div>
                   )}
                 </div>
@@ -185,8 +185,9 @@ const Sidebar = (props = {}) => {
                 image={toppoLogo}
                 link={Routes.Dashboard.path}
               />
+              <NavItem title="Clientes" icon={faBoxOpen} />
 
-              <NavItem title="Catálogo" icon={faBoxOpen} />
+              <NavItem title="Catálogo" link={Routes.Catalog.path} icon={faBoxOpen} />
 
               <NavItem title="Pedidos" icon={faHandHoldingUsd} />
 
@@ -199,7 +200,7 @@ const Sidebar = (props = {}) => {
               >
                 <NavItem
                   title="Credenciales"
-                  link= {Routes.Credentials.path}
+                  link={Routes.Credentials.path}
 
                 />
                 <NavItem

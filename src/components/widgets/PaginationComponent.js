@@ -2,8 +2,8 @@
 import React from 'react';
 import { Pagination } from '@themesberg/react-bootstrap';
 
-const PaginationComponent = ({ currentPage, totalItems, itemsPerPage, onPageChange }) => {
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+const PaginationComponent = ({ currentPage, totalItems, limit, onPageChange }) => {
+    const totalPages = Math.ceil(totalItems / limit);
     const pageLimit = 5;
     const pages = [];
     let startPage, endPage;
