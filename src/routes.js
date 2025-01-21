@@ -9,5 +9,7 @@ export const Routes = {
 
   Catalog: { path: "/dashboard/catalog" },
 
+  Orders: { path: "/dashboard/orders" },
+
   Credentials: { path: "/dashboard/credentials" },
 };

@@ -45,7 +45,7 @@ const Catalog = () => {
 
       // Enviar productos para actualizar
       if (updateProducts.length > 0) {
-        await axios.put(`/sync/send/user/${auth.id}`, { update: updateProducts });
+        await axios.post(`/sync/send/user/${auth.id}`, { update: updateProducts });
       }
 
       // Mostrar mensaje de éxito si es necesario
@@ -105,7 +105,7 @@ const Catalog = () => {
         <Collapse in={showFilters}>
           <Row className="justify-content-between align-items-center mt-3">
             {[{label: "Tipo", name: "productType", options: [{ value: "", label: "Todos" }, { value: "PRODUCT", label: "Producto" }, { value: "SERVICE", label: "Servicio" }]},
-              {label: "Canal", name: "channel", options: [{ value: "", label: "Todos" }, { value: "Shopify", label: "Shopify" }, { value: "Mercadolibre", label: "Mercadolibre" }, { value: "Falabella", label: "Falabella" }]},
+              {label: "Canal", name: "channel", options: [{ value: "", label: "Todos" }, { value: "1", label: "Shopify" }, { value: "2", label: "Mercadolibre" }, { value: "3", label: "Falabella" }]},
               {label: "Estado", name: "status", options: [{ value: "", label: "Todos" }, { value: "active", label: "Activo" }, { value: "draft", label: "Borrador" }, { value: "archived", label: "Archivado" }]},
               {label: "Acción", name: "state", options: [{ value: "", label: "Todos" }, { value: "create", label: "Crear" }, { value: "update", label: "Actualizar" }]},
             ].map(({ label, name, options }) => (

@@ -23,7 +23,10 @@ import Dashboard from '../components/toppo/dashboard/Dashboard'
 import Clients from '../components/toppo/clients/Clients'
 
 // Catalogs
-import Catalog from '../components/toppo/catalog/Catalog'
+import Catalog from '../components/toppo/catalog/catalog'
+
+// Orders
+import Orders from '../components/toppo/orders/orders'
 
 // Credentials
 import Credentials from '../components/toppo/credentials/Credentials'
@@ -115,8 +118,11 @@ export default function AppRoutes() {
 
       <Route path={RoutesConfig.Dashboard.path} element={<RouteWithSidebar element={Dashboard} allowedRoles={['admin', 'client']} />} />
       <Route path={RoutesConfig.Clients.path} element={<RouteWithSidebar element={Clients} allowedRoles={['admin', 'client']} />} />
+
       <Route path={RoutesConfig.Catalog.path} element={<RouteWithSidebar element={Catalog} allowedRoles={['admin', 'client']} />} />
       
+      <Route path={RoutesConfig.Orders.path} element={<RouteWithSidebar element={Orders} allowedRoles={['admin', 'client']} />} />
+
       <Route path={RoutesConfig.Credentials.path} element={<RouteWithSidebar element={Credentials} allowedRoles={['admin', 'client']} />} />
 
       {/* Ruta catch-all */}
