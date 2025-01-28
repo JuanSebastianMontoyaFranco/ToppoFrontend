@@ -189,6 +189,8 @@ const Sidebar = (props = {}) => {
 
               <NavItem title="Catálogo" link={Routes.Catalog.path} icon={faBoxOpen} />
 
+              <NavItem title="Listas de precios" link={Routes.PriceList.path} icon={faBoxOpen} />
+
               <NavItem title="Pedidos" link={Routes.Orders.path} icon={faHandHoldingUsd} />
 
               <CollapsableNavItem

@@ -1,31 +1,114 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faCog, faShoppingBag, faStore, faDatabase, faServer, faFileAlt, faTasks } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faCog, faDatabase } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb, Row, Col } from "@themesberg/react-bootstrap";
+
+// Formularios
 import GeneralForm from "../forms/credentials/generalForm";
-import ShopifyForm from "../forms/credentials/shopifyForm"
 import CredentialCard from "../../widgets/Cards/CredentialCard";
-import HistowebForm from "../forms/credentials/histowebForm";
-import SerpiForm from "../forms/credentials/serpiForm";
+import HistowebForm from "../forms/credentials/histowebSyncForm";
+import SerpiForm from "../forms/credentials/serpiSyncForm";
+import { Context } from "../../../context/Context";
+
+// Imágenes personalizadas
+import histowebImage from "../../../assets/img/logos/histoweb-logo.png";
+import serpiImage from "../../../assets/img/logos/serpi-logo.png";
+import axios from "../../../config/axios";
 
 const Credentials = () => {
-  const credentials = [
-    { id: 1, name: "Histoweb", icon: faDatabase, formContent: <HistowebForm /> },
-    { id: 2, name: "Serpi", icon: faServer, formContent: <SerpiForm /> },
-  ];
+  const [auth] = useContext(Context);
+  const [credentials, setCredentials] = useState([]);
+  const [syncParameters, setSyncParameters] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (auth?.id) {
+      fetchData();
+    }
+  }, [auth]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const { data: response } = await axios.get(
+        `/credential/list/user/${auth.id}`
+      );
+      const credentialsData = response.rows[0]?.credentials || [];
+      const syncParametersData = response.rows[0]?.sync_parameters || [];
+            
+      setCredentials(credentialsData);
+      setSyncParameters(syncParametersData);
+    } catch (error) {
+      console.error("Error al recuperar los datos:", error);
+      setCredentials([]);
+      setSyncParameters([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const general = [
-    { id: 1, name: "General", icon: faCog, formContent: <GeneralForm /> },
+    {
+      id: 1,
+      name: "General",
+      icon: faCog,
+      formContent: (
+        <GeneralForm
+          credentials={credentials}
+          syncParameters={syncParameters}
+        />
+      ),
+    },
   ];
 
-  const channels = [
-    { id: 1, name: "Shopify", icon: faShoppingBag, formContent: <ShopifyForm /> },
-    { id: 2, name: "Mercadolibre", icon: faStore, formContent: <HistowebForm /> },
+  const syncOrders = [
+    {
+      id: 1,
+      name: "Histoweb",
+      image: histowebImage,
+      formContent: (
+        <HistowebForm
+          credentials={credentials}
+          syncParameters={syncParameters}
+        />
+      ),
+    },
+    {
+      id: 2,
+      name: "Serpi",
+      image: serpiImage,
+      formContent: (
+        <SerpiForm
+          credentials={credentials}
+          syncParameters={syncParameters}
+        />
+      ),
+    },
   ];
 
   const orders = [
-    { id: 1, name: "Histoweb", icon: faFileAlt, formContent: <HistowebForm /> },
-    { id: 2, name: "Serpi", icon: faTasks, formContent: <HistowebForm /> },
+    {
+      id: 1,
+      name: "Histoweb",
+      image: histowebImage,
+      formContent: (
+        <HistowebForm
+          credentials={credentials}
+          syncParameters={syncParameters}
+        />
+      ),
+    },
+    {
+      id: 2,
+      name: "Serpi",
+      image: serpiImage,
+      formContent: (
+        <SerpiForm
+          credentials={credentials}
+          syncParameters={syncParameters}
+        />
+      ),
+    },
   ];
 
   return (
@@ -48,48 +131,38 @@ const Credentials = () => {
 
       <h4>Generales</h4>
       <Row>
-        {general.map((general) => (
-          <Col xs={12} sm={6} md={4} lg={3} key={general.id}>
+        {general.map((item) => (
+          <Col xs={12} sm={6} md={4} lg={12} key={item.id}>
             <CredentialCard
-              name={general.name}
-              icon={general.icon}
-              formContent={general.formContent}
+              name={item.name}
+              icon={item.icon}
+              formContent={item.formContent}
             />
           </Col>
         ))}
       </Row>
-      <h4>Canales</h4>
+
+      <h4>Sincronización</h4>
       <Row>
-        {channels.map((channel) => (
-          <Col xs={12} sm={6} md={4} lg={3} key={channel.id}>
-            <CredentialCard
-              name={channel.name}
-              icon={channel.icon}
-              formContent={channel.formContent}
-            />
-          </Col>
-        ))}
-      </Row>
-      <h4>Importaciones</h4>
-      <Row>
-        {credentials.map((credential) => (
-          <Col xs={12} sm={6} md={4} lg={3} key={credential.id}>
+        {syncOrders.map((credential) => (
+          <Col xs={12} sm={6} md={4} lg={6} key={credential.id}>
             <CredentialCard
               name={credential.name}
-              icon={credential.icon}
+              image={credential.image}
               formContent={credential.formContent}
             />
           </Col>
         ))}
       </Row>
+
       <h4>Pedidos</h4>
       <Row>
-        {orders.map((order) => (
-          <Col xs={12} sm={6} md={4} lg={3} key={order.id}>
+        {orders.map((credential) => (
+          <Col xs={12} sm={6} md={4} lg={6} key={credential.id}>
             <CredentialCard
-              name={order.name}
-              icon={order.icon}
-              formContent={order.formContent}
+              name={credential.name}
+              image={credential.image}
+              formContent={credential.formContent}
             />
           </Col>
         ))}

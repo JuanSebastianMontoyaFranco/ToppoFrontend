@@ -20,7 +20,7 @@ export const CatalogTable = ({ searchTerm, channel, state, product_type, status,
     const [showDefault, setShowDefault] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
 
-    const limit = 10;
+    const limit = 50;
 
     useEffect(() => {
         if (auth?.id) {

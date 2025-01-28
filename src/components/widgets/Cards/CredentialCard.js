@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import "./Styles.css"; // Archivo CSS adicional
 
-const CredentialCard = ({ name, icon, formContent }) => {
+const CredentialCard = ({ name, icon, image, formContent }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const toggleForm = () => {
@@ -21,7 +21,11 @@ const CredentialCard = ({ name, icon, formContent }) => {
             onClick={toggleForm}
           />
         </div>
-        <FontAwesomeIcon icon={icon} className="mb-3" size="3x" />
+        {image ? (
+          <img src={image} alt={name} className="mb-3" style={{ width: '20%', height: 'auto' }} />
+        ) : (
+          <FontAwesomeIcon icon={icon} className="mb-3" size="3x" />
+        )}
         <Card.Title>{name}</Card.Title>
         <div className={`form-collapse ${isFormVisible ? "show" : ""}`}>
           {formContent}

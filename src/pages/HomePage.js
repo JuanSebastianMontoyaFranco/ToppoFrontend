@@ -25,6 +25,9 @@ import Clients from '../components/toppo/clients/Clients'
 // Catalogs
 import Catalog from '../components/toppo/catalog/catalog'
 
+// Pricelist
+import Pricelist from '../components/toppo/priceLists/priceList'
+
 // Orders
 import Orders from '../components/toppo/orders/orders'
 
@@ -120,6 +123,8 @@ export default function AppRoutes() {
       <Route path={RoutesConfig.Clients.path} element={<RouteWithSidebar element={Clients} allowedRoles={['admin', 'client']} />} />
 
       <Route path={RoutesConfig.Catalog.path} element={<RouteWithSidebar element={Catalog} allowedRoles={['admin', 'client']} />} />
+
+      <Route path={RoutesConfig.PriceList.path} element={<RouteWithSidebar element={Pricelist} allowedRoles={['admin', 'client']} />} />
       
       <Route path={RoutesConfig.Orders.path} element={<RouteWithSidebar element={Orders} allowedRoles={['admin', 'client']} />} />
 

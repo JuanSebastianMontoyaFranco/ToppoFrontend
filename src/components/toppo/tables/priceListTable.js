@@ -8,9 +8,8 @@ import { Context } from "../../../context/Context";
 import axios from '../../../config/axios';
 import { OrderDetailModal } from '../modals/orders/orderDetail';
 import { formatDate } from '../../utils/format-time';
-import { getEcommerceReferenceIcon, getStateIcon } from '../../utils/format-icons';
 
-export const OrdersTable = ({ searchTerm, state }) => {
+export const PriceListTable = ({ searchTerm, state }) => {
     const navigate = useNavigate();
     const [auth] = useContext(Context);
     const [data, setData] = useState([]);
@@ -22,7 +21,7 @@ export const OrdersTable = ({ searchTerm, state }) => {
     const [showDefault, setShowDefault] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
 
-    const limit = 50;
+    const limit = 10;
 
     useEffect(() => {
         if (auth?.id) {
@@ -34,7 +33,7 @@ export const OrdersTable = ({ searchTerm, state }) => {
         setLoading(true);
         try {
             const { data: response } = await axios.get(
-                `/order/list/user/${auth.id}`,
+                `/pricelist/list/user/${auth.id}`,
                 {
                     params: { search: searchTerm, state, page, limit }
                 }
@@ -71,26 +70,21 @@ export const OrdersTable = ({ searchTerm, state }) => {
         setSelectedId(null); // Restablece el ID seleccionado cuando se cierra el modal
     };
 
-    const TableRow = ({ ecommerce_reference, order_id, state, ecommerce_name, date_create, billing_first_name, billing_last_name, billing_email, order_total }) => (
+    const TableRow = ({ id, name, default: defaultProp }) => (
         <tr>
-            <td>{getEcommerceReferenceIcon(ecommerce_reference)}</td>
-            <td>{getStateIcon(state)}</td>
-            <td><span className="fw-normal">{order_id}</span></td>
-            <td><span className="fw-normal">{ecommerce_name}</span></td>
-            <td>{formatDate(date_create)}</td>
-            <td><span className="fw-normal">{billing_first_name} {billing_last_name}</span></td>
-            <td><span className="fw-normal">{billing_email}</span></td>
-            <td><span className="fw-normal">{order_total}</span></td>
+            <td><span className="fw-normal">{id}</span></td>
+            <td><span className="fw-normal">{name}</span></td>
+            <td><span className="fw-normal">{defaultProp ? 'Sí' : 'No'}</span></td>
             <td>
                 <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
                         <FontAwesomeIcon icon={faEllipsisH} className="icon-dark" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => handleShowDetails(order_id)} >
+                        <Dropdown.Item onClick={() => handleShowDetails(id)} >
                             <FontAwesomeIcon icon={faEye} className="me-2" /> Detalles
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleEdit(order_id)}>
+                        <Dropdown.Item onClick={() => handleEdit(id)}>
                             <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
                         </Dropdown.Item>
                     </Dropdown.Menu>
@@ -113,14 +107,9 @@ export const OrdersTable = ({ searchTerm, state }) => {
                         <Table hover className="align-items-center">
                             <thead>
                                 <tr>
-                                    <th className="border-bottom">Desde</th>
-                                    <th className="border-bottom">Estado</th>
                                     <th className="border-bottom">ID</th>
-                                    <th className="border-bottom">Referencia Ecommerce</th>
-                                    <th className="border-bottom">Fecha</th>
                                     <th className="border-bottom">Nombre</th>
-                                    <th className="border-bottom">Email</th>
-                                    <th className="border-bottom">Total</th>
+                                    <th className="border-bottom">Por defecto</th>
                                     <th className="border-bottom">Acciones</th>
                                 </tr>
                             </thead>
@@ -153,4 +142,4 @@ export const OrdersTable = ({ searchTerm, state }) => {
     );
 };
 
-export default OrdersTable;
+export default PriceListTable;

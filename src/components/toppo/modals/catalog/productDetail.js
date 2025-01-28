@@ -4,13 +4,13 @@ import { Context } from "../../../../context/Context";
 import axios from "../../../../config/axios";
 
 export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
-    const { auth } = useContext(Context); // Asegúrate de que el 'auth' venga del contexto
+    const [auth] = useContext(Context); // Asegúrate de que el 'auth' venga del contexto
     const [data, setData] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [totalData, setTotalData] = useState(0); // Agregado para almacenar el total de productos
 
-    console.log(selectedId);
+    console.log(auth.id);
 
     useEffect(() => {
         if (selectedId) {
@@ -22,9 +22,11 @@ export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
         setLoading(true);
 
         try {
-            const { data: response } = await axios.get(`/product/detail`, {
+            const { data: response } = await axios.get(`/product/detail/user/${auth.id}`, {
                 params: { product_id: selectedId }
             });
+            console.log(response);
+
             setData(response.rows || []);
             setTotalData(response.total || 0);
         } catch (error) {
@@ -36,7 +38,7 @@ export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
     };
 
     return (
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title>Detalles del Producto</Modal.Title>
             </Modal.Header>
@@ -74,8 +76,22 @@ export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
                                                         <Card.Body>
                                                             <Card.Text>
                                                                 <strong>SKU:</strong> {variant.sku} <br />
-                                                                <strong>Precio:</strong> ${variant.prices && variant.prices[0] ? (variant.prices[0].price) : 'N/A'} <br />
-                                                                <strong>Stock:</strong> {variant.inventory_quantity} unidades <br />
+                                                                <strong>Precio:</strong>
+                                                                {variant.prices && variant.prices.length > 0
+                                                                    ? `$${variant.prices[0].price} (${variant.prices[0].currency})`
+                                                                    : 'N/A'}
+                                                                <br />
+                                                                <strong>Precio Comparativo:</strong>
+                                                                {variant.prices && variant.prices.length > 0 && variant.prices[0].compare_at_price
+                                                                    ? `$${variant.prices[0].compare_at_price} (${variant.prices[0].currency})`
+                                                                    : 'N/A'}
+                                                                <br />
+                                                                <strong>Lista de Precios:</strong>
+                                                                {variant.prices && variant.prices.length > 0
+                                                                    ? variant.prices[0].price_list.name
+                                                                    : 'No disponible'}
+                                                                    <br/>
+                                                                <strong>Stock:</strong> {variant.inventory_quantity} <br />
                                                                 <strong>Barcode:</strong> {variant.barcode}
                                                             </Card.Text>
                                                         </Card.Body>
