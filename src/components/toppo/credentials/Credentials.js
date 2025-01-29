@@ -6,8 +6,10 @@ import { Breadcrumb, Row, Col } from "@themesberg/react-bootstrap";
 // Formularios
 import GeneralForm from "../forms/credentials/generalForm";
 import CredentialCard from "../../widgets/Cards/CredentialCard";
-import HistowebForm from "../forms/credentials/histowebSyncForm";
-import SerpiForm from "../forms/credentials/serpiSyncForm";
+import HistowebSyncForm from "../forms/credentials/histowebSyncForm";
+import SerpiSyncForm from "../forms/credentials/serpiSyncForm";
+import HistowebOrdersForm from "../forms/credentials/histowebOrdersForm";
+import SerpiOrdersForm from "../forms/credentials/serpiOrdersForm";
 import { Context } from "../../../context/Context";
 
 // Imágenes personalizadas
@@ -19,6 +21,7 @@ const Credentials = () => {
   const [auth] = useContext(Context);
   const [credentials, setCredentials] = useState([]);
   const [syncParameters, setSyncParameters] = useState([]);
+  const [orderParameters, setOrderParameters] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,13 +38,16 @@ const Credentials = () => {
       );
       const credentialsData = response.rows[0]?.credentials || [];
       const syncParametersData = response.rows[0]?.sync_parameters || [];
+      const orderParametersData = response.rows[0]?.order_parameters || [];
             
       setCredentials(credentialsData);
       setSyncParameters(syncParametersData);
+      setOrderParameters(orderParametersData)
     } catch (error) {
       console.error("Error al recuperar los datos:", error);
       setCredentials([]);
       setSyncParameters([]);
+      setOrderParameters([]);
     } finally {
       setLoading(false);
     }
@@ -61,13 +67,13 @@ const Credentials = () => {
     },
   ];
 
-  const syncOrders = [
+  const sync = [
     {
       id: 1,
       name: "Histoweb",
       image: histowebImage,
       formContent: (
-        <HistowebForm
+        <HistowebSyncForm
           credentials={credentials}
           syncParameters={syncParameters}
         />
@@ -78,7 +84,7 @@ const Credentials = () => {
       name: "Serpi",
       image: serpiImage,
       formContent: (
-        <SerpiForm
+        <SerpiSyncForm
           credentials={credentials}
           syncParameters={syncParameters}
         />
@@ -92,9 +98,9 @@ const Credentials = () => {
       name: "Histoweb",
       image: histowebImage,
       formContent: (
-        <HistowebForm
+        <HistowebOrdersForm
           credentials={credentials}
-          syncParameters={syncParameters}
+          orderParameters={orderParameters}
         />
       ),
     },
@@ -103,9 +109,9 @@ const Credentials = () => {
       name: "Serpi",
       image: serpiImage,
       formContent: (
-        <SerpiForm
+        <SerpiOrdersForm
           credentials={credentials}
-          syncParameters={syncParameters}
+          orderParameters={orderParameters}
         />
       ),
     },
@@ -144,7 +150,7 @@ const Credentials = () => {
 
       <h4>Sincronización</h4>
       <Row>
-        {syncOrders.map((credential) => (
+        {sync.map((credential) => (
           <Col xs={12} sm={6} md={4} lg={6} key={credential.id}>
             <CredentialCard
               name={credential.name}

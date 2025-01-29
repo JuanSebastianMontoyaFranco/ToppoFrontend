@@ -44,7 +44,7 @@ const HistowebForm = ({ credentials, syncParameters }) => {
 
       setSyncData({ sync_status: syncStatus });
       setIsActivated(syncStatus);
-      console.log("Sync parameters procesados:", syncParameters); // Debug adicional
+      //console.log("Sync parameters procesados:", syncParameters); // Debug adicional
     }
   }, [syncParameters]);
 
