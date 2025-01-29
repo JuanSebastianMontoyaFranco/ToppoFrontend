@@ -10,12 +10,12 @@ const HistowebForm = ({ credentials, orderParameters }) => {
 
   const [syncData, setSyncData] = useState({
     main: false,
+    active: false,
     branch_id_defult: 0,
     branch_name_default: "",
   });
 
   useEffect(() => {
-    // Inicializa los datos del formulario con las credenciales proporcionadas
     if (credentials && credentials.length > 0) {
       const firstCredential = credentials[0];
       setData({
@@ -26,24 +26,19 @@ const HistowebForm = ({ credentials, orderParameters }) => {
   }, [credentials]);
 
   useEffect(() => {
-    // Actualiza el estado de isActivated basado en order_main (ahora entero)
-    const orderMainInt = parseInt(data.order_main, 10); // Asegura que sea un número entero
-    if (orderMainInt === 2) {
-      setIsActivated(true);
-    } else {
-      setIsActivated(false);
-    }
+    const orderMainInt = parseInt(data.order_main, 10);
+    setIsActivated(orderMainInt === 2);
   }, [data.order_main]);
 
   useEffect(() => {
-    // Extrae el main del array orderParameters si está definido
     if (orderParameters && orderParameters.length > 0) {
       const firstSyncParameter = orderParameters[0];
       const main = firstSyncParameter.main === 2;
+      const active = firstSyncParameter.active === true;
       const branch_id_defult = firstSyncParameter.branch_id_defult || 0;
       const branch_name_default = firstSyncParameter.branch_name_default || "";
 
-      setSyncData({ main, branch_id_defult, branch_name_default });
+      setSyncData({ main, active, branch_id_defult, branch_name_default });
       setIsActivated(main);
     }
   }, [orderParameters]);
@@ -72,8 +67,8 @@ const HistowebForm = ({ credentials, orderParameters }) => {
   };
 
   const handleSyncStatusChange = (field, value) => {
-    setSyncData((prevData) => ({
-      ...prevData,
+    setSyncData((prevSyncData) => ({
+      ...prevSyncData,
       [field]: value,
     }));
   };
@@ -116,6 +111,15 @@ const HistowebForm = ({ credentials, orderParameters }) => {
           label="Activar"
           checked={syncData.main}
           onChange={(e) => handleSyncStatusChange("main", e.target.checked)}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Check
+          type="checkbox"
+          label="Automático"
+          checked={syncData.active}
+          onChange={(e) => handleSyncStatusChange("active", e.target.checked)}
         />
       </Form.Group>
 

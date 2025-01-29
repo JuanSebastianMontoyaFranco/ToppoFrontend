@@ -59,7 +59,7 @@ export const OrdersTable = ({ searchTerm, state }) => {
         }
     };
 
-    const handleEdit = (id) => navigate(`/product/edit/${id}`);
+    const handleEdit = (order_id) => navigate(`/dashboard/orders/edit/${order_id}`);
 
     const handleShowDetails = (id) => {
         setSelectedId(id);

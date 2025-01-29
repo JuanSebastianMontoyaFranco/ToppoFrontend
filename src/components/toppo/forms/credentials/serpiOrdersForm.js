@@ -1,46 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "@themesberg/react-bootstrap";
 
-const SerpiForm = ({ credentials, syncParameters }) => {
+const SerpiForm = ({ credentials, orderParameters }) => {
   const [isActivated, setIsActivated] = useState(false);
   const [data, setData] = useState({
-    token_serpi: "",
-    secret_key_serpi: "",
-    product_main: "",
+    order_main: "",
   });
 
   const [syncData, setSyncData] = useState({
-    sync_status: false, // Aseguramos que sea un booleano inicial
+    main: false,
+    active: false,
   });
 
   useEffect(() => {
-    // Inicializa los datos del formulario con las credenciales proporcionadas
     if (credentials && credentials.length > 0) {
       const firstCredential = credentials[0];
       setData({
-        token_serpi: firstCredential.token_serpi || "",
-        secret_key_serpi: firstCredential.secret_key_serpi || "",
-        product_main: firstCredential.product_main || "",
+        order_main: firstCredential.order_main || "",
       });
     }
   }, [credentials]);
 
   useEffect(() => {
-    // Actualiza el estado de isActivated basado en product_main
-    setIsActivated(data.product_main === 1);
-  }, [data.product_main]);
+    const orderMainInt = parseInt(data.order_main, 10);
+    setIsActivated(orderMainInt === 1);
+  }, [data.order_main]);
 
   useEffect(() => {
-    // Extrae el sync_status del array syncParameters si está definido
-    if (syncParameters && syncParameters.length > 0) {
-      const firstSyncParameter = syncParameters[0]; // Tomamos el primer elemento
-      const syncStatus = !!firstSyncParameter.sync_status; // Convertimos a booleano seguro
+    if (orderParameters && orderParameters.length > 0) {
+      const firstSyncParameter = orderParameters[0];
+      const main = firstSyncParameter.main === 1;
+      const active = firstSyncParameter.active === true;
 
-      setSyncData({ sync_status: syncStatus });
-      setIsActivated(syncStatus);
-      //console.log("Sync parameters procesados:", syncParameters); // Debug adicional
+      setSyncData({ main, active });
+      setIsActivated(main);
     }
-  }, [syncParameters]);
+  }, [orderParameters]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,7 +43,7 @@ const SerpiForm = ({ credentials, syncParameters }) => {
     const formData = {
       isActivated,
       ...data,
-      sync_status: syncData.sync_status,
+      ...syncData,
     };
 
     try {
@@ -65,38 +60,21 @@ const SerpiForm = ({ credentials, syncParameters }) => {
     }));
   };
 
-  const handleSyncStatusChange = (value) => {
-    setSyncData({ sync_status: value });
+  const handleSyncStatusChange = (field, value) => {
+    setSyncData((prevSyncData) => ({
+      ...prevSyncData,
+      [field]: value,
+    }));
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="token_serpi">
-        <Form.Label>Token Serpi</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Ingresa el token de Serpi"
-          value={data.token_serpi}
-          onChange={(e) => handleChange("token_serpi", e.target.value)}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="secret_key_serpi">
-        <Form.Label>Secret Key Serpi</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Ingresa la clave secreta de Serpi"
-          value={data.secret_key_serpi}
-          onChange={(e) => handleChange("secret_key_serpi", e.target.value)}
-        />
-      </Form.Group>
-
       <Form.Group className="mb-3">
         <Form.Check
           type="checkbox"
           label="Activar"
-          checked={isActivated}
-          onChange={(e) => setIsActivated(e.target.checked)}
+          checked={syncData.main}
+          onChange={(e) => handleSyncStatusChange("main", e.target.checked)}
         />
       </Form.Group>
 
@@ -104,8 +82,8 @@ const SerpiForm = ({ credentials, syncParameters }) => {
         <Form.Check
           type="checkbox"
           label="Automático"
-          checked={syncData.sync_status}
-          onChange={(e) => handleSyncStatusChange(e.target.checked)}
+          checked={syncData.active}
+          onChange={(e) => handleSyncStatusChange("active", e.target.checked)}
         />
       </Form.Group>
 

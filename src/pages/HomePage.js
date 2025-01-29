@@ -30,6 +30,7 @@ import Pricelist from '../components/toppo/priceLists/priceList'
 
 // Orders
 import Orders from '../components/toppo/orders/orders'
+import EditOrder from '../components/toppo/orders/editOrder'
 
 // Credentials
 import Credentials from '../components/toppo/credentials/Credentials'
@@ -127,6 +128,7 @@ export default function AppRoutes() {
       <Route path={RoutesConfig.PriceList.path} element={<RouteWithSidebar element={Pricelist} allowedRoles={['admin', 'client']} />} />
       
       <Route path={RoutesConfig.Orders.path} element={<RouteWithSidebar element={Orders} allowedRoles={['admin', 'client']} />} />
+      <Route path={RoutesConfig.EditOrder.path} element={<RouteWithSidebar element={EditOrder} allowedRoles={['admin', 'client']} />} />
 
       <Route path={RoutesConfig.Credentials.path} element={<RouteWithSidebar element={Credentials} allowedRoles={['admin', 'client']} />} />
 
