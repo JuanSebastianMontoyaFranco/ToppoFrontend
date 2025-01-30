@@ -133,7 +133,8 @@ const Sidebar = (props = {}) => {
 
   // Verificar si el acordeón de ajustes debe estar abierto
   const shouldSettingsAccordionOpen = isPathActive([
-
+    Routes.Credentials.path,
+    Routes.Profile.path
   ]);
 
   return (
@@ -207,7 +208,7 @@ const Sidebar = (props = {}) => {
                 />
                 <NavItem
                   title="Perfil"
-
+                  link={Routes.Profile.path}
                 />
               </CollapsableNavItem>
             </Nav>

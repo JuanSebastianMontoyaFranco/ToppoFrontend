@@ -14,5 +14,6 @@ export const Routes = {
   Orders: { path: "/dashboard/orders" },
   EditOrder: { path: "/dashboard/orders/edit/:order_id" },
 
-  Credentials: { path: "/dashboard/credentials" },
+  Credentials: { path: "/dashboard/settings/credentials" },
+  Profile: { path: "/dashboard/settings/profile" },
 };

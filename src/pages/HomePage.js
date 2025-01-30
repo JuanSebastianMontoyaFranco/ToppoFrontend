@@ -16,11 +16,11 @@ import Sidebar from '../components/widgets/Sidebar';
 import Navbar from '../components/widgets/Navbar'
 
 // Login
-import Login from '../components/toppo/login/Login'
-import Dashboard from '../components/toppo/dashboard/Dashboard'
+import Login from '../components/toppo/login/login'
+import Dashboard from '../components/toppo/dashboard/dashboard'
 
 // Clients
-import Clients from '../components/toppo/clients/Clients'
+import Clients from '../components/toppo/clients/clients'
 
 // Catalogs
 import Catalog from '../components/toppo/catalog/catalog'
@@ -33,7 +33,8 @@ import Orders from '../components/toppo/orders/orders'
 import EditOrder from '../components/toppo/orders/editOrder'
 
 // Credentials
-import Credentials from '../components/toppo/credentials/Credentials'
+import Credentials from '../components/toppo/credentials/credentials'
+import Profile from '../components/toppo/profile/profile'
 
 // Usa la configuración de rutas
 import { Routes as RoutesConfig } from '../routes';
@@ -131,6 +132,7 @@ export default function AppRoutes() {
       <Route path={RoutesConfig.EditOrder.path} element={<RouteWithSidebar element={EditOrder} allowedRoles={['admin', 'client']} />} />
 
       <Route path={RoutesConfig.Credentials.path} element={<RouteWithSidebar element={Credentials} allowedRoles={['admin', 'client']} />} />
+      <Route path={RoutesConfig.Profile.path} element={<RouteWithSidebar element={Profile} allowedRoles={['admin', 'client']} />} />
 
       {/* Ruta catch-all */}
       <Route path="*" element={<NotFoundRedirect />} />
