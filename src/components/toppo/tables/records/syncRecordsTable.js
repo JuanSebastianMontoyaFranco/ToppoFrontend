@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHourglassHalf, faExclamationTriangle, faEdit, faEllipsisH, faEye, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { Card, Table, Dropdown, Pagination, ButtonGroup, Button, Spinner } from '@themesberg/react-bootstrap';
+import { faEllipsisH, faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Card, Table, Dropdown, ButtonGroup, Button, Spinner } from '@themesberg/react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import PaginationComponent from '../../widgets/PaginationComponent';
-import { Context } from "../../../context/Context";
-import axios from '../../../config/axios';
-import { OrderDetailModal } from '../modals/orders/orderDetail';
-import { formatDate } from '../../utils/format-time';
+import PaginationComponent from '../../../widgets/PaginationComponent';
+import { Context } from "../../../../context/Context";
+import axios from '../../../../config/axios';
+import { OrderDetailModal } from '../../modals/orders/orderDetail';
+import { getFieldLabel, getStatusLabel } from '../../../utils/format-text';
+import { formatDate, formatDateHours } from '../../../utils/format-time';
 
-export const PriceListTable = ({ searchTerm, state }) => {
+export const SyncRecordsTable = ({ searchTerm, state }) => {
     const navigate = useNavigate();
     const [auth] = useContext(Context);
     const [data, setData] = useState([]);
@@ -17,11 +18,11 @@ export const PriceListTable = ({ searchTerm, state }) => {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
 
-    //Modal
+    // Modal
     const [showDefault, setShowDefault] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
 
-    const limit = 10;
+    const limit = 50;
 
     useEffect(() => {
         if (auth?.id) {
@@ -33,17 +34,13 @@ export const PriceListTable = ({ searchTerm, state }) => {
         setLoading(true);
         try {
             const { data: response } = await axios.get(
-                `/pricelist/list/user/${auth.id}`,
+                `/sync/list/sync/record/user/${auth.id}`,
                 {
                     params: { search: searchTerm, state, page, limit }
                 }
             );
             setData(response.rows || []);
             setTotalData(response.total || 0);
-
-            const products = response.rows || [];
-            console.log(products);
-
         } catch (error) {
             console.error("Error al recuperar los datos:", error);
             setData([]);
@@ -58,7 +55,7 @@ export const PriceListTable = ({ searchTerm, state }) => {
         }
     };
 
-    const handleEdit = (id) => navigate(`/product/edit/${id}`);
+    const handleEdit = (order_id) => navigate(`/dashboard/orders/edit/${order_id}`);
 
     const handleShowDetails = (id) => {
         setSelectedId(id);
@@ -70,11 +67,11 @@ export const PriceListTable = ({ searchTerm, state }) => {
         setSelectedId(null); // Restablece el ID seleccionado cuando se cierra el modal
     };
 
-    const TableRow = ({ id, name, default: defaultProp }) => (
+    const TableRow = ({ id, sync_form, createdAt }) => (
         <tr>
             <td><span className="fw-normal">{id}</span></td>
-            <td><span className="fw-normal">{name}</span></td>
-            <td><span className="fw-normal">{defaultProp ? 'Sí' : 'No'}</span></td>
+            <td><span className="fw-normal">{sync_form}</span></td>
+            <td><span className="fw-normal">{formatDateHours(createdAt)}</span></td>
             <td>
                 <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -84,9 +81,6 @@ export const PriceListTable = ({ searchTerm, state }) => {
                         <Dropdown.Item onClick={() => handleShowDetails(id)} >
                             <FontAwesomeIcon icon={faEye} className="me-2" /> Detalles
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleEdit(id)}>
-                            <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
-                        </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </td>
@@ -95,7 +89,6 @@ export const PriceListTable = ({ searchTerm, state }) => {
 
     return (
         <>
-
             <Card border="light" className="table-wrapper table-responsive shadow-sm">
                 <Card.Body className="pt-0">
                     {loading ? (
@@ -108,8 +101,8 @@ export const PriceListTable = ({ searchTerm, state }) => {
                             <thead>
                                 <tr>
                                     <th className="border-bottom">ID</th>
-                                    <th className="border-bottom">Nombre</th>
-                                    <th className="border-bottom">Por defecto</th>
+                                    <th className="border-bottom">TIPO</th>
+                                    <th className="border-bottom">Fecha</th>
                                     <th className="border-bottom">Acciones</th>
                                 </tr>
                             </thead>
@@ -118,7 +111,7 @@ export const PriceListTable = ({ searchTerm, state }) => {
                                     data.map(item => <TableRow key={item.id} {...item} />)
                                 ) : (
                                     <tr>
-                                        <td colSpan="12" className="text-center">No se encontraron productos que coincidan con la búsqueda.</td>
+                                        <td colSpan="9" className="text-center">No se encontraron registros que coincidan con la búsqueda.</td>
                                     </tr>
                                 )}
                             </tbody>
@@ -133,7 +126,7 @@ export const PriceListTable = ({ searchTerm, state }) => {
                         onPageChange={handlePageChange}
                     />
                     <small className="fw-bold">
-                        Mostrando <b>{Math.min((page - 1) * limit + 1, totalData)}-{Math.min(page * limit, totalData)}</b> de un total de <b>{totalData}</b> productos
+                        Mostrando <b>{Math.min((page - 1) * limit + 1, totalData)}-{Math.min(page * limit, totalData)}</b> de un total de <b>{totalData}</b> registros
                     </small>
                 </Card.Footer>
             </Card>
@@ -142,4 +135,4 @@ export const PriceListTable = ({ searchTerm, state }) => {
     );
 };
 
-export default PriceListTable;
+export default SyncRecordsTable;

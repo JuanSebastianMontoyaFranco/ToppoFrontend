@@ -16,4 +16,5 @@ export const Routes = {
 
   Credentials: { path: "/dashboard/settings/credentials" },
   Profile: { path: "/dashboard/settings/profile" },
+  Records: { path: "/dashboard/settings/records" }
 };

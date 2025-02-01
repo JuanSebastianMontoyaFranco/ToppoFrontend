@@ -19,7 +19,7 @@ const Dashboard = () => {
     // Solicita datos a la API
     const fetchStatistics = async () => {
       try {
-        const response = await axios.get(`/statistic/list/user/${auth.user_id}`);
+        const response = await axios.get(`/statistic/list/user/${auth.id}`);
         setStatistics(response.data); // Actualiza el estado con la respuesta
       } catch (error) {
         console.error("Error al obtener las estadísticas:", error);
@@ -27,7 +27,7 @@ const Dashboard = () => {
     };
 
     fetchStatistics();
-  }, [auth.user_id]);
+  }, [auth.id]);
 
   // Configuración de los datos para los gráficos
   const orderData = [

@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHourglassHalf, faExclamationTriangle, faEdit, faEllipsisH, faEye, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEllipsisH, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Card, Table, Dropdown, Pagination, ButtonGroup, Button, Spinner } from '@themesberg/react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import PaginationComponent from '../../widgets/PaginationComponent';
-import { Context } from "../../../context/Context";
-import axios from '../../../config/axios';
-import { OrderDetailModal } from '../modals/orders/orderDetail';
-import { formatDate } from '../../utils/format-time';
-import { getEcommerceReferenceIcon, getStateIcon } from '../../utils/format-icons';
+import PaginationComponent from '../../../widgets/PaginationComponent';
+import { Context } from "../../../../context/Context";
+import axios from '../../../../config/axios';
+import { ProductDetailModal } from '../../modals/catalog/productDetail';
 
-export const OrdersTable = ({ searchTerm, state }) => {
+export const CatalogTable = ({ searchTerm, channel, state, product_type, status, sync }) => {
     const navigate = useNavigate();
     const [auth] = useContext(Context);
     const [data, setData] = useState([]);
@@ -28,15 +26,15 @@ export const OrdersTable = ({ searchTerm, state }) => {
         if (auth?.id) {
             fetchData();
         }
-    }, [auth, searchTerm, state, page]);
+    }, [auth, searchTerm, channel, state, product_type, status, page]);
 
     const fetchData = async () => {
         setLoading(true);
         try {
             const { data: response } = await axios.get(
-                `/order/list/user/${auth.id}`,
+                `/product/list/user/${auth.id}`,
                 {
-                    params: { search: searchTerm, state, page, limit }
+                    params: { search: searchTerm, channel, state, product_type, status, page, limit }
                 }
             );
             setData(response.rows || []);
@@ -44,6 +42,8 @@ export const OrdersTable = ({ searchTerm, state }) => {
 
             const products = response.rows || [];
             console.log(products);
+
+            sync && sync(products);
 
         } catch (error) {
             console.error("Error al recuperar los datos:", error);
@@ -59,7 +59,7 @@ export const OrdersTable = ({ searchTerm, state }) => {
         }
     };
 
-    const handleEdit = (order_id) => navigate(`/dashboard/orders/edit/${order_id}`);
+    const handleEdit = (id) => navigate(`/product/edit/${id}`);
 
     const handleShowDetails = (id) => {
         setSelectedId(id);
@@ -71,26 +71,24 @@ export const OrdersTable = ({ searchTerm, state }) => {
         setSelectedId(null); // Restablece el ID seleccionado cuando se cierra el modal
     };
 
-    const TableRow = ({ ecommerce_reference, order_id, state, ecommerce_name, date_create, billing_first_name, billing_last_name, billing_email, order_total }) => (
+
+    const TableRow = ({ id, title, vendor, product_type, status, variants }) => (
         <tr>
-            <td>{getEcommerceReferenceIcon(ecommerce_reference)}</td>
-            <td>{getStateIcon(state)}</td>
-            <td><span className="fw-normal">{order_id}</span></td>
-            <td><span className="fw-normal">{ecommerce_name}</span></td>
-            <td>{formatDate(date_create)}</td>
-            <td><span className="fw-normal">{billing_first_name} {billing_last_name}</span></td>
-            <td><span className="fw-normal">{billing_email}</span></td>
-            <td><span className="fw-normal">{order_total}</span></td>
+            <td><span className="fw-normal">{id}</span></td>
+            <td><span className="fw-normal">{status}</span></td>
+            <td><span className="fw-normal">{title}</span></td>
+            <td><span className="fw-normal">{product_type}</span></td>
+            <td><span className="fw-normal">{vendor}</span></td>
             <td>
                 <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
                         <FontAwesomeIcon icon={faEllipsisH} className="icon-dark" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => handleShowDetails(order_id)} >
+                        <Dropdown.Item onClick={() => handleShowDetails(id)} >
                             <FontAwesomeIcon icon={faEye} className="me-2" /> Detalles
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleEdit(order_id)}>
+                        <Dropdown.Item onClick={() => handleEdit(id)}>
                             <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
                         </Dropdown.Item>
                     </Dropdown.Menu>
@@ -113,14 +111,11 @@ export const OrdersTable = ({ searchTerm, state }) => {
                         <Table hover className="align-items-center">
                             <thead>
                                 <tr>
-                                    <th className="border-bottom">Desde</th>
-                                    <th className="border-bottom">Estado</th>
                                     <th className="border-bottom">ID</th>
-                                    <th className="border-bottom">Referencia Ecommerce</th>
-                                    <th className="border-bottom">Fecha</th>
+                                    <th className="border-bottom">Estado</th>
                                     <th className="border-bottom">Nombre</th>
-                                    <th className="border-bottom">Email</th>
-                                    <th className="border-bottom">Total</th>
+                                    <th className="border-bottom">Tipo</th>
+                                    <th className="border-bottom">Proveedor</th>
                                     <th className="border-bottom">Acciones</th>
                                 </tr>
                             </thead>
@@ -148,9 +143,9 @@ export const OrdersTable = ({ searchTerm, state }) => {
                     </small>
                 </Card.Footer>
             </Card>
-            <OrderDetailModal show={showDefault} handleClose={handleClose} selectedId={selectedId} />
+            <ProductDetailModal show={showDefault} handleClose={handleClose} selectedId={selectedId} />
         </>
     );
 };
 
-export default OrdersTable;
+export default CatalogTable;

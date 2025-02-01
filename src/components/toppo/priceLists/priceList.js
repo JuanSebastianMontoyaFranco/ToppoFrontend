@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Collapse } from "@themesberg/react-bootstrap";
-import { PriceListTable } from "../tables/priceListTable";
+import { PriceListTable } from "../tables/priceLists/priceListTable";
 import axios from '../../../config/axios';
 import { Context } from "../../../context/Context";
 

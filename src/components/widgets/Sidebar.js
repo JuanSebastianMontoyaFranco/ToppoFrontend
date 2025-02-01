@@ -134,7 +134,8 @@ const Sidebar = (props = {}) => {
   // Verificar si el acordeón de ajustes debe estar abierto
   const shouldSettingsAccordionOpen = isPathActive([
     Routes.Credentials.path,
-    Routes.Profile.path
+    Routes.Profile.path,
+    Routes.Records.path
   ]);
 
   return (
@@ -201,6 +202,10 @@ const Sidebar = (props = {}) => {
                 isOpen={isSettingsAccordionOpen || shouldSettingsAccordionOpen} // Mantener el acordeón abierto
                 onToggle={() => setSettingsAccordionOpen(!isSettingsAccordionOpen)}
               >
+                <NavItem
+                  title="Registros"
+                  link={Routes.Records.path}
+                />
                 <NavItem
                   title="Credenciales"
                   link={Routes.Credentials.path}

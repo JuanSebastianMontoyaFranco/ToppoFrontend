@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEllipsisH, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faHourglassHalf, faExclamationTriangle, faEdit, faEllipsisH, faEye, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Card, Table, Dropdown, Pagination, ButtonGroup, Button, Spinner } from '@themesberg/react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import PaginationComponent from '../../widgets/PaginationComponent';
-import { Context } from "../../../context/Context";
-import axios from '../../../config/axios';
-import { ProductDetailModal } from '../modals/catalog/productDetail';
+import PaginationComponent from '../../../widgets/PaginationComponent';
+import { Context } from "../../../../context/Context";
+import axios from '../../../../config/axios';
+import { OrderDetailModal } from '../../modals/orders/orderDetail';
+import { formatDate } from '../../../utils/format-time';
 
-export const CatalogTable = ({ searchTerm, channel, state, product_type, status, sync }) => {
+export const PriceListTable = ({ searchTerm, state }) => {
     const navigate = useNavigate();
     const [auth] = useContext(Context);
     const [data, setData] = useState([]);
@@ -20,21 +21,21 @@ export const CatalogTable = ({ searchTerm, channel, state, product_type, status,
     const [showDefault, setShowDefault] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
 
-    const limit = 50;
+    const limit = 10;
 
     useEffect(() => {
         if (auth?.id) {
             fetchData();
         }
-    }, [auth, searchTerm, channel, state, product_type, status, page]);
+    }, [auth, searchTerm, state, page]);
 
     const fetchData = async () => {
         setLoading(true);
         try {
             const { data: response } = await axios.get(
-                `/product/list/user/${auth.id}`,
+                `/pricelist/list/user/${auth.id}`,
                 {
-                    params: { search: searchTerm, channel, state, product_type, status, page, limit }
+                    params: { search: searchTerm, state, page, limit }
                 }
             );
             setData(response.rows || []);
@@ -42,8 +43,6 @@ export const CatalogTable = ({ searchTerm, channel, state, product_type, status,
 
             const products = response.rows || [];
             console.log(products);
-
-            sync && sync(products);
 
         } catch (error) {
             console.error("Error al recuperar los datos:", error);
@@ -71,14 +70,11 @@ export const CatalogTable = ({ searchTerm, channel, state, product_type, status,
         setSelectedId(null); // Restablece el ID seleccionado cuando se cierra el modal
     };
 
-
-    const TableRow = ({ id, title, vendor, product_type, status, variants }) => (
+    const TableRow = ({ id, name, default: defaultProp }) => (
         <tr>
             <td><span className="fw-normal">{id}</span></td>
-            <td><span className="fw-normal">{status}</span></td>
-            <td><span className="fw-normal">{title}</span></td>
-            <td><span className="fw-normal">{product_type}</span></td>
-            <td><span className="fw-normal">{vendor}</span></td>
+            <td><span className="fw-normal">{name}</span></td>
+            <td><span className="fw-normal">{defaultProp ? 'Sí' : 'No'}</span></td>
             <td>
                 <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -112,10 +108,8 @@ export const CatalogTable = ({ searchTerm, channel, state, product_type, status,
                             <thead>
                                 <tr>
                                     <th className="border-bottom">ID</th>
-                                    <th className="border-bottom">Estado</th>
                                     <th className="border-bottom">Nombre</th>
-                                    <th className="border-bottom">Tipo</th>
-                                    <th className="border-bottom">Proveedor</th>
+                                    <th className="border-bottom">Por defecto</th>
                                     <th className="border-bottom">Acciones</th>
                                 </tr>
                             </thead>
@@ -143,9 +137,9 @@ export const CatalogTable = ({ searchTerm, channel, state, product_type, status,
                     </small>
                 </Card.Footer>
             </Card>
-            <ProductDetailModal show={showDefault} handleClose={handleClose} selectedId={selectedId} />
+            <OrderDetailModal show={showDefault} handleClose={handleClose} selectedId={selectedId} />
         </>
     );
 };
 
-export default CatalogTable;
+export default PriceListTable;
