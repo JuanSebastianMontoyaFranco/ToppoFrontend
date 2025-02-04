@@ -187,7 +187,7 @@ const Sidebar = (props = {}) => {
                 image={toppoLogo}
                 link={Routes.Dashboard.path}
               />
-              <NavItem title="Clientes" icon={faBoxOpen} />
+              <NavItem title="Clientes" link={Routes.Clients.path} icon={faBoxOpen} />
 
               <NavItem title="Catálogo" link={Routes.Catalog.path} icon={faBoxOpen} />
 
