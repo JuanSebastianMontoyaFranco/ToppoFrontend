@@ -5,6 +5,8 @@ import { Breadcrumb, Row, Col } from "@themesberg/react-bootstrap";
 import { Context } from "../../../context/Context";
 import { CircleChartWidget } from "../../widgets/GraphicsComponent";
 import axios from "../../../config/axios";
+import { useLocation } from 'react-router-dom';
+import DismissableAlerts from '../../widgets/Alerts';
 
 const Dashboard = () => {
   const [auth] = useContext(Context);
@@ -12,6 +14,10 @@ const Dashboard = () => {
     orders: { pending: 0, approved: 0, errors: 0 },
     products: { active: 0, draft: 0, archived: 0 },
   });
+
+  const location = useLocation();
+  const alerts = location.state?.alerts || []; // Recupera las alertas del estado de la ruta, si existen
+
 
   const displayName = `${auth.first_name} ${auth.last_name}`;
 
@@ -65,6 +71,8 @@ const Dashboard = () => {
           <CircleChartWidget title="Productos" data={productData} />
         </Col>
       </Row>
+      {alerts.length > 0 && <DismissableAlerts alerts={alerts} onClose={() => {}} />}
+
     </>
   );
 };

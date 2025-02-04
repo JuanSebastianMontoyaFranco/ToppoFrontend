@@ -8,11 +8,14 @@ import { simpleAlert } from "../../alerts/Alerts";
 import { Routes } from "../../../routes";
 import { Context } from "../../../context/Context";
 
+import DismissableAlerts from '../../widgets/Alerts';
+
 const Login = () => {
     const [, saveAuth] = useContext(Context); // eslint-disable-line no-unused-vars
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({ email: "", password: "" });
+    const [alerts, setAlerts] = useState([]);
 
     const handleChange = ({ target: { name, value } }) => {
         setCredentials(prevState => ({ ...prevState, [name]: value }));
@@ -32,8 +35,11 @@ const Login = () => {
                 auth: true,
             });
 
-            simpleAlert('Bienvenido', 'success', 'Has iniciado sesión correctamente');
-            navigate('/dashboard');
+            // En el Login.js
+            const alerts = [{ id: 'success', variant: 'success', message: 'Has iniciado sesión correctamente' }];
+
+            navigate('/dashboard', { state: { alerts } });
+
         } catch (error) {
             const errorMsg = error.response?.data?.message || 'Error al iniciar sesión';
             simpleAlert('Oops...', 'error', errorMsg);
@@ -58,6 +64,10 @@ const Login = () => {
         </Form.Group>
     );
 
+    const closeAlert = (alertId) => {
+        setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== alertId));
+    };
+
     return (
         <main>
             <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -74,6 +84,10 @@ const Login = () => {
                                     <h2 className="mb-0">Toppo</h2>
                                     <h3 className="mb-0">Ingresa</h3>
                                 </div>
+
+                                {/* Alerts */}
+                                <DismissableAlerts alerts={alerts} onClose={closeAlert} />
+
                                 <Form className="mt-4" onSubmit={login}>
                                     {renderInput("email", "Tu correo", "email", faEnvelope)}
                                     {renderInput("password", "Tu contraseña", "password", faUnlockAlt)}
