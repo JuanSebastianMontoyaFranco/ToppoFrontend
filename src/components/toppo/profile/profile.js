@@ -23,7 +23,7 @@ const Profile = () => {
             <Breadcrumb.Item active>Perfil</Breadcrumb.Item>
           </Breadcrumb>
           <h4 className="title-page">Perfil</h4>
-          <p className="mb-0">Aquí podrás ver la infromacion de tu perfil.</p>
+          <p className="mb-0">Aquí podrás ver la información de tu perfil.</p>
         </div>
       </div>
 

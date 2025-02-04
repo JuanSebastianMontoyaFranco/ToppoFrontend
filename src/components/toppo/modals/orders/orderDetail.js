@@ -37,7 +37,7 @@ export const OrderDetailModal = ({ show, handleClose, selectedId }) => {
     };
 
     return (
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title>Detalles del pedido</Modal.Title>
             </Modal.Header>

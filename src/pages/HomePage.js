@@ -21,7 +21,7 @@ import Dashboard from '../components/toppo/dashboard/dashboard'
 
 // Clients
 import Clients from '../components/toppo/clients/clients'
-
+import CreateClient from '../components/toppo/clients/createClient'
 // Catalogs
 import Catalog from '../components/toppo/catalog/catalog'
 
@@ -124,6 +124,7 @@ export default function AppRoutes() {
 
       <Route path={RoutesConfig.Dashboard.path} element={<RouteWithSidebar element={Dashboard} allowedRoles={['admin', 'client']} />} />
       <Route path={RoutesConfig.Clients.path} element={<RouteWithSidebar element={Clients} allowedRoles={['admin', 'client']} />} />
+      <Route path={RoutesConfig.CreateClient.path} element={<RouteWithSidebar element={CreateClient} allowedRoles={['admin', 'client']} />} />
 
       <Route path={RoutesConfig.Catalog.path} element={<RouteWithSidebar element={Catalog} allowedRoles={['admin', 'client']} />} />
 

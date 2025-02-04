@@ -6,6 +6,7 @@ export const Routes = {
   Login: { path: "/login" },
 
   Clients: { path: "/dashboard/clients" },
+  CreateClient: { path: "/dashboard/clients/create"},
 
   Catalog: { path: "/dashboard/catalog" },
 

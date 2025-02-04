@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import PaginationComponent from '../../../widgets/PaginationComponent';
 import { Context } from "../../../../context/Context";
 import axios from '../../../../config/axios';
-import { OrderDetailModal } from '../../modals/orders/orderDetail';
+import { ClientDetailModal } from '../../modals/clients/clientDetail';
 import { formatDate } from '../../../utils/format-time';
 
 export const ClientsTable = ({ searchTerm }) => {
@@ -125,7 +125,7 @@ export const ClientsTable = ({ searchTerm }) => {
                                     data.map(item => <TableRow key={item.id} {...item} />)
                                 ) : (
                                     <tr>
-                                        <td colSpan="12" className="text-center">No se encontraron productos que coincidan con la búsqueda.</td>
+                                        <td colSpan="12" className="text-center">No se encontraron clientes que coincidan con la búsqueda.</td>
                                     </tr>
                                 )}
                             </tbody>
@@ -140,11 +140,11 @@ export const ClientsTable = ({ searchTerm }) => {
                         onPageChange={handlePageChange}
                     />
                     <small className="fw-bold">
-                        Mostrando <b>{Math.min((page - 1) * limit + 1, totalData)}-{Math.min(page * limit, totalData)}</b> de un total de <b>{totalData}</b> productos
+                        Mostrando <b>{Math.min((page - 1) * limit + 1, totalData)}-{Math.min(page * limit, totalData)}</b> de un total de <b>{totalData}</b> clientes
                     </small>
                 </Card.Footer>
             </Card>
-            <OrderDetailModal show={showDefault} handleClose={handleClose} selectedId={selectedId} />
+            <ClientDetailModal show={showDefault} handleClose={handleClose} selectedId={selectedId} />
         </>
     );
 };

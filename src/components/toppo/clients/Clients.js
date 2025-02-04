@@ -5,14 +5,20 @@ import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Collapse }
 import { ClientsTable } from "../tables/clients/clientsTable";
 import axios from '../../../config/axios';
 import { Context } from "../../../context/Context";
+import { useNavigate } from 'react-router-dom';
 
 const Clients = () => {
+    const navigate = useNavigate();
     const [auth] = useContext(Context);
     const [filters, setFilters] = useState({
         searchTerm: "",
     });
     const [showFilters, setShowFilters] = useState(false);
 
+    const handleCreate = () => {
+        navigate(`/dashboard/clients/create`);
+    };
+    
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters((prev) => ({ ...prev, [name]: value }));
@@ -35,7 +41,7 @@ const Clients = () => {
 
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <ButtonGroup>
-                        <Button variant="outline-primary" size="sm">Agregar</Button>
+                        <Button variant="outline-primary" size="sm" onClick={() => handleCreate()}>Agregar</Button>
                         <Button variant="outline-primary" size="sm">Importar</Button>
                         <Button variant="outline-primary" size="sm">Exportar</Button>
                     </ButtonGroup>
