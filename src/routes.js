@@ -6,7 +6,7 @@ export const Routes = {
   Login: { path: "/login" },
 
   Clients: { path: "/dashboard/clients" },
-  CreateClient: { path: "/dashboard/clients/create"},
+  CreateClient: { path: "/dashboard/clients/create" },
 
   Catalog: { path: "/dashboard/catalog" },
 
@@ -14,6 +14,7 @@ export const Routes = {
 
   Orders: { path: "/dashboard/orders" },
   EditOrder: { path: "/dashboard/orders/edit/:order_id" },
+  Createorder: { path: "/dashboard/orders/create" },
 
   Credentials: { path: "/dashboard/settings/credentials" },
   Profile: { path: "/dashboard/settings/profile" },

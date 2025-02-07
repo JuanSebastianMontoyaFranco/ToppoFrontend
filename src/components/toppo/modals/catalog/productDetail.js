@@ -52,7 +52,6 @@ export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
                                 {/* Columna de información del producto */}
                                 <Col sm={12} md={6}>
                                     <p><strong>ID:</strong> {product.id}</p>
-                                    <p><strong>ID Shopify:</strong> {product.product_id_shopify}</p>
                                     <p><strong>Título:</strong> {product.title}</p>
                                     <p><strong>Tipo:</strong> {product.product_type}</p>
                                     <p><strong>Proveedor:</strong> {product.vendor}</p>
@@ -66,12 +65,13 @@ export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
                                         product.variants.map((variant) => (
                                             <Card key={variant.id} className="mb-3 card-highlight">
                                                 <Row>
-                                                    <Image
-                                                        src={variant.image_url}
-                                                        alt='imagen'
-                                                        rounded
-                                                        fluid
+                                                    <Card.Img
+                                                        src={variant.variant_images?.[0]?.image_url || "URL_DE_IMAGEN_POR_DEFECTO"}
+                                                        alt='imagen variante'
+                                                        style={{ height: '200px', objectFit: 'cover' }}
+
                                                     />
+
                                                     <Col md={8}>
                                                         <Card.Body>
                                                             <Card.Text>
@@ -90,7 +90,7 @@ export const ProductDetailModal = ({ show, handleClose, selectedId }) => {
                                                                 {variant.prices && variant.prices.length > 0
                                                                     ? variant.prices[0].price_list.name
                                                                     : 'No disponible'}
-                                                                    <br/>
+                                                                <br />
                                                                 <strong>Stock:</strong> {variant.inventory_quantity} <br />
                                                                 <strong>Barcode:</strong> {variant.barcode}
                                                             </Card.Text>

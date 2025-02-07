@@ -5,8 +5,10 @@ import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Collapse }
 import { OrdersTable } from "../tables/orders/orderTable";
 import axios from '../../../config/axios';
 import { Context } from "../../../context/Context";
+import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
+    const navigate = useNavigate();
     const [auth] = useContext(Context);
     const [filters, setFilters] = useState({
         searchTerm: "",
@@ -18,6 +20,11 @@ const Orders = () => {
         const { name, value } = e.target;
         setFilters((prev) => ({ ...prev, [name]: value }));
     };
+
+    const handleCreate = () => {
+        navigate(`/dashboard/orders/create`);
+    };
+
 
     const toggleFilters = () => setShowFilters(!showFilters);
 
@@ -36,7 +43,7 @@ const Orders = () => {
 
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <ButtonGroup>
-                        <Button variant="outline-primary" size="sm">Agregar</Button>
+                        <Button variant="outline-primary" size="sm" onClick={() => handleCreate()}>Agregar</Button>
                         <Button variant="outline-primary" size="sm">Importar</Button>
                         <Button variant="outline-primary" size="sm">Exportar</Button>
                     </ButtonGroup>

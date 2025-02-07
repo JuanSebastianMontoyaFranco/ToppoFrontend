@@ -22,3 +22,8 @@ export const getStatusLabel = (field) => {
             return field;
     }
 };
+
+export const truncateText = (text, maxLength = 35) => {
+    if (!text) return ""; // Manejo de valores nulos o indefinidos
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};

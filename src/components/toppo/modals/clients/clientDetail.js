@@ -9,7 +9,7 @@ export const ClientDetailModal = ({ show, handleClose, selectedId }) => {
     const [data, setData] = useState([]);
 
     const [loading, setLoading] = useState(false);
-    const [totalData, setTotalData] = useState(0); 
+    const [totalData, setTotalData] = useState(0);
 
     console.log(selectedId);
 
@@ -60,10 +60,16 @@ export const ClientDetailModal = ({ show, handleClose, selectedId }) => {
 
                                 {/* Columna de items */}
                                 <Col sm={12} md={6}>
-                                <p><strong>Apellido:</strong> {client.billing_last_name}</p>
-                                <p><strong>Teléfono:</strong> {client.billing_phone}</p>
-                                <p><strong>Lista de precios:</strong> {client.price_list_id}</p>
-                                <p><strong>Vendedor:</strong> {client.seller_id}</p>
+                                    <p><strong>Apellido:</strong> {client.billing_last_name}</p>
+                                    <p><strong>Teléfono:</strong> {client.billing_phone}</p>
+                                    <p><strong>Lista de precios:</strong> {client.price_list_id} - {client.price_list_name}</p>
+                                    <p><strong>Vendedor:</strong>
+                                        {client.seller_id === 0 || !client.seller_name ? (
+                                            <span style={{ color: "red", fontWeight: "bold" }}> No asignado</span>
+                                        ) : (
+                                            <> {client.seller_id} - {client.seller_name}</>
+                                        )}
+                                    </p>
 
                                 </Col>
                             </React.Fragment>
