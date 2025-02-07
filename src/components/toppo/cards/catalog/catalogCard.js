@@ -100,16 +100,20 @@ export const CatalogCard = ({ searchTerm, channel, state, product_type, status, 
                                                 />
 
                                                 <Card.Body>
-                                                <h5 className="card-title">{truncateText(item.title)}</h5>
-                                                <p className="card-text">Proveedor: {item.vendor}</p>
+                                                    <h5 className="card-title">{truncateText(item.title)}</h5>
+                                                    <p className="card-text">Proveedor: {item.vendor}</p>
                                                     <p className="card-text">Tipo: {item.product_type}</p>
                                                     <p className="card-text">Estado: {item.status}</p>
                                                     <Button variant="primary" onClick={() => handleShowDetails(item.id)}>
                                                         <FontAwesomeIcon icon={faEye} /> Ver detalles
                                                     </Button>
-                                                    <Button variant="secondary" onClick={() => handleEdit(item.id)} className="ms-2">
-                                                        <FontAwesomeIcon icon={faEdit} /> Editar
-                                                    </Button>
+                                                    {auth.role === 'admin' && (
+
+                                                        <Button variant="secondary" onClick={() => handleEdit(item.id)} className="ms-2">
+                                                            <FontAwesomeIcon icon={faEdit} /> Editar
+                                                        </Button>
+                                                    )}
+
                                                 </Card.Body>
                                             </Card>
                                         </div>

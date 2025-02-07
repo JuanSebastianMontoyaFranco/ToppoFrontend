@@ -85,11 +85,15 @@ const Catalog = () => {
             <Button variant={viewMode === "card" ? "primary" : "outline-primary"} size="sm" onClick={() => handleViewChange("card")}>
               <FontAwesomeIcon icon={faThLarge} />
             </Button>
-            <Button variant="outline-primary" size="sm">Agregar</Button>
-            <Button variant="outline-primary" size="sm">Importar</Button>
-            <Button variant="outline-primary" size="sm">Exportar</Button>
-            <Button variant="outline-primary" size="sm" onClick={handleSync}>Sincronizar</Button>
 
+            {auth.role === 'admin' && (
+              <>
+                <Button variant="outline-primary" size="sm">Agregar</Button>
+                <Button variant="outline-primary" size="sm">Importar</Button>
+                <Button variant="outline-primary" size="sm">Exportar</Button>
+                <Button variant="outline-primary" size="sm" onClick={handleSync}>Sincronizar</Button>
+              </>
+            )}
           </ButtonGroup>
         </div>
       </div>

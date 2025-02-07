@@ -35,20 +35,21 @@ export const CatalogCard = ({ searchTerm, channel, state, product_type, status, 
     const fetchData = async () => {
         setLoading(true);
         try {
-            const { data: response } = await axios.get(
-                `/product/list/user/${auth.id}`,
-                {
-                    params: { search: searchTerm, channel, state, product_type, status, page, limit }
-                }
-            );
+            const url = auth.role === 'admin' 
+                ? `/product/list/user/${auth.id}` 
+                : `/product/catalog/list/pricelist/15`;
+    
+            const { data: response } = await axios.get(url, {
+                params: { search: searchTerm, channel, state, product_type, status, page, limit }
+            });
+    
             setData(response.rows || []);
             setTotalData(response.total || 0);
-
+    
             const products = response.rows || [];
             console.log(products);
-
+    
             sync && sync(products);
-
         } catch (error) {
             console.error("Error al recuperar los datos:", error);
             setData([]);
@@ -56,6 +57,7 @@ export const CatalogCard = ({ searchTerm, channel, state, product_type, status, 
             setLoading(false);
         }
     };
+    
 
     const handleEdit = (id) => navigate(`/product/edit/${id}`);
 
@@ -100,15 +102,12 @@ export const CatalogCard = ({ searchTerm, channel, state, product_type, status, 
                                                 />
 
                                                 <Card.Body>
-                                                <h5 className="card-title">{truncateText(item.title)}</h5>
-                                                <p className="card-text">Proveedor: {item.vendor}</p>
+                                                    <h5 className="card-title">{truncateText(item.title)}</h5>
+                                                    <p className="card-text">Proveedor: {item.vendor}</p>
                                                     <p className="card-text">Tipo: {item.product_type}</p>
                                                     <p className="card-text">Estado: {item.status}</p>
                                                     <Button variant="primary" onClick={() => handleShowDetails(item.id)}>
                                                         <FontAwesomeIcon icon={faEye} /> Ver detalles
-                                                    </Button>
-                                                    <Button variant="secondary" onClick={() => handleEdit(item.id)} className="ms-2">
-                                                        <FontAwesomeIcon icon={faEdit} /> Editar
                                                     </Button>
                                                 </Card.Body>
                                             </Card>
